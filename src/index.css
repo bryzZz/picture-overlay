@@ -1,0 +1,23 @@
+:root {
+    --container-pad: 15px;
+    --container-width: calc(1100px - var(--container-pad) * 2);
+}
+
+body {
+    font-family: "Montserrat", sans-serif;
+}
+
+.container {
+    max-width: var(--container-width);
+    padding: 0 var(--container-pad);
+    margin: 0 auto;
+}
+
+.App__container {
+    display: flex;
+    gap: 1rem;
+}
+
+.App__side {
+    width: 100%;
+}
