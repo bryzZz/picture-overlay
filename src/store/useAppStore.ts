@@ -3,14 +3,14 @@ import { devtools, persist } from "zustand/middleware";
 import { Coords } from "../types";
 
 interface UploadState {
-    firstImgData: string;
-    secondImgData: string;
+    mainImgData: string;
+    overlayImgData: string;
     scale: number;
     opacity: number;
     angle: number;
     position: Coords;
-    setFirstImgData: (imgData: string) => void;
-    setSecondImgData: (imgData: string) => void;
+    setMainImgData: (imgData: string) => void;
+    setOverlayImgData: (imgData: string) => void;
     setScale: (scale: number) => void;
     setOpacity: (opacity: number) => void;
     setAngle: (angle: number) => void;
@@ -20,16 +20,16 @@ interface UploadState {
 export const useUploadStore = create<UploadState>()(
     persist(
         devtools((set) => ({
-            firstImgData: "",
-            secondImgData: "",
+            mainImgData: "",
+            overlayImgData: "",
             scale: 100,
             opacity: 100,
             angle: 0,
             position: { x: 0, y: 0 },
-            setFirstImgData: (firstImgData) =>
-                set(() => ({ firstImgData }), false, "setFirstImgData"),
-            setSecondImgData: (secondImgData) =>
-                set(() => ({ secondImgData }), false, "setSecondImgData"),
+            setMainImgData: (mainImgData) =>
+                set(() => ({ mainImgData }), false, "setMainImgData"),
+            setOverlayImgData: (overlayImgData) =>
+                set(() => ({ overlayImgData }), false, "setOverlayImgData"),
             setScale: (scale) => set(() => ({ scale }), false, "setScale"),
             setOpacity: (opacity) =>
                 set(() => ({ opacity }), false, "setOpacity"),

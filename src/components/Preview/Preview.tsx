@@ -7,10 +7,10 @@ interface PreviewProps {
 }
 
 export const Preview: React.FC<PreviewProps> = ({ canvasRef }) => {
-    const [firstImgData, secondImgData, scale, opacity, angle, position] =
+    const [mainImgData, overlayImgData, scale, opacity, angle, position] =
         useUploadStore((state) => [
-            state.firstImgData,
-            state.secondImgData,
+            state.mainImgData,
+            state.overlayImgData,
             state.scale,
             state.opacity,
             state.angle,
@@ -28,7 +28,7 @@ export const Preview: React.FC<PreviewProps> = ({ canvasRef }) => {
         image.onload = () => {
             ctx.drawImage(image, 0, 0);
         };
-        image.src = firstImgData;
+        image.src = mainImgData;
 
         const image_ = new Image();
         image_.onload = () => {
@@ -55,8 +55,8 @@ export const Preview: React.FC<PreviewProps> = ({ canvasRef }) => {
             ctx.setTransform(1, 0, 0, 1, 0, 0);
             ctx.restore();
         };
-        image_.src = secondImgData;
-    }, [firstImgData, secondImgData, scale, opacity, angle, position]);
+        image_.src = overlayImgData;
+    }, [mainImgData, overlayImgData, scale, opacity, angle, position]);
 
     return (
         <div className='Preview'>

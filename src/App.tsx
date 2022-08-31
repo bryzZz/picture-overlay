@@ -6,14 +6,14 @@ import { useUploadStore } from "./store/useAppStore";
 export const App: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const {
-        firstImgData,
-        secondImgData,
+        mainImgData,
+        overlayImgData,
         scale,
         opacity,
         angle,
         position,
-        setFirstImgData,
-        setSecondImgData,
+        setMainImgData,
+        setOverlayImgData,
         setScale,
         setOpacity,
         setAngle,
@@ -47,11 +47,13 @@ export const App: React.FC = () => {
         <div className='App'>
             <div className='container App__container'>
                 <div className='App__side'>
-                    {!firstImgData && <Upload setImgData={setFirstImgData} />}
-                    {firstImgData && <Preview canvasRef={canvasRef} />}
+                    {!mainImgData && <Upload setImgData={setMainImgData} />}
+                    {mainImgData && <Preview canvasRef={canvasRef} />}
                 </div>
                 <div className='App__side'>
-                    {!secondImgData && <Upload setImgData={setSecondImgData} />}
+                    {!overlayImgData && (
+                        <Upload setImgData={setOverlayImgData} />
+                    )}
                     <label>
                         Scale:
                         <input
