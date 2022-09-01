@@ -1,10 +1,13 @@
 import React, { useRef } from "react";
+import { Header } from "./components/Header/Header";
 import { Preview } from "./components/Preview/Preview";
+import { Setting } from "./components/Setting/Setting";
 import { Upload } from "./components/Upload/Upload";
 import { useUploadStore } from "./store/useAppStore";
 
 export const App: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    // const mainImgRef = useRef<HTMLImageElement>(new Image());
     const {
         mainImgData,
         overlayImgData,
@@ -13,6 +16,7 @@ export const App: React.FC = () => {
         angle,
         position,
         setMainImgData,
+        setMainImgBoundaries,
         setOverlayImgData,
         setScale,
         setOpacity,
@@ -25,6 +29,19 @@ export const App: React.FC = () => {
         link.download = "download.png";
         link.href = canvasRef.current!.toDataURL();
         link.click();
+    };
+
+    const handleChangeMainImg = (imgData: string) => {
+        const img = new Image();
+        img.onload = () => {
+            setMainImgBoundaries({ width: img.width, height: img.height });
+            setMainImgData(imgData);
+        };
+        img.src = imgData;
+    };
+
+    const handleChangeOverlayImg = (imgData: string) => {
+        setOverlayImgData(imgData);
     };
 
     const handleChangeScale = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,57 +62,50 @@ export const App: React.FC = () => {
 
     return (
         <div className='App'>
+            <Header />
             <div className='container App__container'>
                 <div className='App__side'>
-                    {!mainImgData && <Upload setImgData={setMainImgData} />}
+                    {!mainImgData && (
+                        <Upload onChangeImgData={handleChangeMainImg} />
+                    )}
                     {mainImgData && <Preview canvasRef={canvasRef} />}
                 </div>
                 <div className='App__side'>
                     {!overlayImgData && (
-                        <Upload setImgData={setOverlayImgData} />
+                        <Upload onChangeImgData={handleChangeOverlayImg} />
                     )}
-                    <label>
-                        Scale:
-                        <input
-                            type='text'
-                            value={scale}
-                            onChange={handleChangeScale}
-                        />
-                    </label>
-                    <label>
-                        Opacity:
-                        <input
-                            type='text'
-                            value={opacity}
-                            onChange={handleChangeOpacity}
-                        />
-                    </label>
-                    <label>
-                        Angle:
-                        <input
-                            type='text'
-                            value={angle}
-                            onChange={handleChangeAngle}
-                        />
-                    </label>
-                    <label>
-                        Position x:
-                        <input
-                            type='text'
-                            name='x'
-                            value={position.x}
-                            onChange={handleChangePosition}
-                        />
-                    </label>
-                    <label>
-                        Position y:
-                        <input
-                            type='text'
-                            name='y'
-                            value={position.y}
-                            onChange={handleChangePosition}
-                        />
-                    </label>
+                    <Setting
+                        label='Scale:'
+                        value={scale}
+                        onChange={handleChangeScale}
+                    />
+                    <Setting
+                        label='Opacity:'
+                        value={opacity}
+                        onChange={handleChangeOpacity}
+                    />
+                    <Setting
+                        label='Angle:'
+                        value={angle}
+                        onChange={handleChangeAngle}
+                    />
+                    <Setting
+                        label='Position:'
+                        value={angle}
+                        onChange={handleChangeAngle}
+                    />
+                    <Setting
+                        label='Offset x:'
+                        name='x'
+                        value={position.x}
+                        onChange={handleChangePosition}
+                    />
+                    <Setting
+                        label='Offset y:'
+                        name='y'
+                        value={position.y}
+                        onChange={handleChangePosition}
+                    />
                     <button onClick={handleGetImage}>Get Image</button>
                 </div>
             </div>

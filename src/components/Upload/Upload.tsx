@@ -3,17 +3,11 @@ import { readImage } from "../../utils";
 import "./style.css";
 
 interface UploadProps {
-    setImgData: (imgData: string) => void;
+    onChangeImgData: (imgData: string) => void;
 }
 
-export const Upload: React.FC<UploadProps> = ({ setImgData }) => {
+export const Upload: React.FC<UploadProps> = ({ onChangeImgData }) => {
     const [isDragOver, setIsDragOver] = useState<boolean>(false);
-
-    const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files === null) return;
-        const result = await readImage(e.target.files[0]);
-        if (!(result instanceof ArrayBuffer) && result) setImgData(result);
-    };
 
     const handleDragEnter = (e: React.DragEvent) => {
         e.preventDefault();
@@ -25,12 +19,20 @@ export const Upload: React.FC<UploadProps> = ({ setImgData }) => {
         setIsDragOver(false);
     };
 
+    const handleChangeFile = async (file: File) => {
+        const result = await readImage(file);
+        if (!(result instanceof ArrayBuffer) && result) onChangeImgData(result);
+    };
+
+    const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files === null) return;
+        await handleChangeFile(e.target.files[0]);
+    };
+
     const handleDrop = async (e: React.DragEvent) => {
         e.preventDefault();
-        const f = e.dataTransfer;
-        if (f.files === null) return;
-        const result = await readImage(f.files[0]);
-        if (!(result instanceof ArrayBuffer) && result) setImgData(result);
+        if (e.dataTransfer.files === null) return;
+        await handleChangeFile(e.dataTransfer.files[0]);
     };
 
     return (

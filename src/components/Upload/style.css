@@ -1,14 +1,18 @@
 .Upload {
     position: relative;
     min-height: 200px;
-    border: 2px dashed #c2c2c2;
+    background-color: #343a40;
     border-radius: 0.4rem;
-    transition: border 0.3s ease;
+    color: #fff;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
 }
 
 .Upload:hover,
 .Upload.dragover {
-    border-color: lime;
+    border-color: #fcc419;
+    color: #fcc419;
+    border-color: #f08c00;
 }
 
 .Upload__label {
@@ -16,7 +20,9 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    transition: color 0.1s ease;
     font-size: 1.2rem;
+    font-weight: 500;
 }
 
 .Upload__input {

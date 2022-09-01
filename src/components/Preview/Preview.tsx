@@ -7,22 +7,28 @@ interface PreviewProps {
 }
 
 export const Preview: React.FC<PreviewProps> = ({ canvasRef }) => {
-    const [mainImgData, overlayImgData, scale, opacity, angle, position] =
-        useUploadStore((state) => [
-            state.mainImgData,
-            state.overlayImgData,
-            state.scale,
-            state.opacity,
-            state.angle,
-            state.position,
-        ]);
+    const [
+        mainImgData,
+        mainImgBoundaries,
+        overlayImgData,
+        scale,
+        opacity,
+        angle,
+        position,
+    ] = useUploadStore((state) => [
+        state.mainImgData,
+        state.mainImgBoundaries,
+        state.overlayImgData,
+        state.scale,
+        state.opacity,
+        state.angle,
+        state.position,
+    ]);
 
     useEffect(() => {
-        console.log("update");
-
         const canvas = canvasRef.current!;
         const ctx = canvas.getContext("2d")!;
-        ctx.clearRect(0, 0, 300, 150);
+        ctx.clearRect(0, 0, 3104, 1356);
 
         const image = new Image();
         image.onload = () => {
@@ -60,7 +66,11 @@ export const Preview: React.FC<PreviewProps> = ({ canvasRef }) => {
 
     return (
         <div className='Preview'>
-            <canvas ref={canvasRef} />
+            <canvas
+                ref={canvasRef}
+                width={mainImgBoundaries.width}
+                height={mainImgBoundaries.height}
+            />
         </div>
     );
 };
