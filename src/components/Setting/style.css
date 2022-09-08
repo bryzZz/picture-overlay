@@ -1,8 +1,12 @@
 .Setting {
-    color: #fff;
+    color: var(--color-secondary);
     max-width: 320px;
     width: 100%;
     display: flex;
     justify-content: space-between;
     margin-bottom: 1rem;
+}
+
+.Setting__input {
+    max-width: 60px;
 }

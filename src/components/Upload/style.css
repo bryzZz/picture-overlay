@@ -1,18 +1,17 @@
 .Upload {
     position: relative;
     min-height: 200px;
-    background-color: #343a40;
+    background-color: var(--color-bg-alt);
     border-radius: 0.4rem;
-    color: #fff;
+    color: var(--color-secondary);
     border: 1px solid transparent;
     transition: all 0.3s ease;
 }
 
 .Upload:hover,
 .Upload.dragover {
-    border-color: #fcc419;
-    color: #fcc419;
-    border-color: #f08c00;
+    border-color: var(--color-primary);
+    color: var(--color-primary);
 }
 
 .Upload__label {

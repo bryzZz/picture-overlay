@@ -1,4 +1,20 @@
 .Preview {
     display: flex;
     justify-content: center;
+    padding: 1rem;
+    border: 2px dashed var(--color-primary);
+    /* background: linear-gradient(135deg, #fcc419 0%, #ffffff 100%); */
+    /* background: linear-gradient(
+        135deg,
+        #fcc419 0% 10%,
+        #ffffff 10% 20%,
+        #fcc419 20% 30%,
+        #ffffff 30% 40%,
+        #fcc419 40% 50%,
+        #ffffff 50% 60%,
+        #fcc419 60% 70%,
+        #ffffff 70% 80%,
+        #fcc419 80% 90%,
+        #ffffff 90% 100%
+    ); */
 }

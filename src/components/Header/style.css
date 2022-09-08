@@ -6,7 +6,7 @@
 
 .Header__title {
     font-size: 1.8rem;
-    color: #fcc419;
-    text-shadow: -2px 2px 1px #f08c00;
+    color: var(--color-primary);
+    text-shadow: -2px 2px 1px var(--color-primary-alt);
     margin: 0;
 }

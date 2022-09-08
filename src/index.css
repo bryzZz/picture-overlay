@@ -1,11 +1,18 @@
 :root {
     --container-pad: 15px;
-    --container-width: calc(1100px - var(--container-pad) * 2);
+    --container-width: calc(1100px + var(--container-pad) * 2);
+
+    --color-primary: #fcc419;
+    --color-primary-alt: #f08c00;
+    --color-secondary: #ffffff;
+    --color-tertiary: #c2c2c2;
+    --color-bg: #212529;
+    --color-bg-alt: #343a40;
 }
 
 body {
     font-family: "Montserrat", sans-serif;
-    background-color: #212529;
+    background-color: var(--color-bg);
 }
 
 .container {
@@ -15,7 +22,9 @@ body {
 }
 
 .App__container {
-    display: flex;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    /* display: flex; */
     gap: 1rem;
 }
 
