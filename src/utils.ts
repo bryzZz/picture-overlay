@@ -9,7 +9,7 @@ export function readImage(image: File) {
     });
 }
 
-function createImage(src: string) {
+export function createImage(src: string) {
     const image = new Image();
     image.src = src;
     return new Promise<HTMLImageElement>((res, rej) => {
@@ -18,17 +18,39 @@ function createImage(src: string) {
     });
 }
 
-export async function getImageData(src: string, scale: number = 1) {
-    const image = await createImage(src);
+type DrawImageOpts = {
+    width?: number;
+    height?: number;
+    angle?: number;
+    opacity?: number;
+};
 
-    const width = image.width * scale;
-    const height = image.height * scale;
-    return new Promise<ImageData>((res) => {
-        const canvas = document.createElement("canvas");
-        canvas.width = width;
-        canvas.height = height;
-        const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
-        ctx.drawImage(image, 0, 0, width, height);
-        res(ctx.getImageData(0, 0, width, height));
-    });
+export function drawImage(
+    ctx: CanvasRenderingContext2D,
+    img: HTMLImageElement,
+    x: number,
+    y: number,
+    opts?: DrawImageOpts
+) {
+    if (opts) {
+        ctx.save();
+
+        let { width, height, angle, opacity } = opts;
+        if (!width) width = img.width;
+        if (!height) height = img.height;
+
+        if (opacity) ctx.globalAlpha = opacity;
+        if (angle) {
+            ctx.translate(width / 2, height / 2);
+            ctx.rotate(angle * (Math.PI / 180));
+            ctx.translate(-width / 2, -height / 2);
+        }
+
+        ctx.drawImage(img, x, y, width, height);
+
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.restore();
+    } else {
+        ctx.drawImage(img, x, y);
+    }
 }

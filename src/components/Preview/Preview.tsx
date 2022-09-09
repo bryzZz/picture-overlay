@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Boundaries, Coords } from "../../types";
+import { drawImage } from "../../utils";
 import { Canvas } from "./Canvas";
 import "./style.css";
 
@@ -30,29 +31,23 @@ export const Preview: React.FC<PreviewProps> = ({
         const canvas = canvasRef.current!;
         const ctx = canvas.getContext("2d")!;
 
-        ctx.drawImage(mainImg, 0, 0);
+        // main image
+        drawImage(ctx, mainImg, 0, 0);
 
-        const { width, height } = overlayImgBoundaries;
-        ctx.save();
-        ctx.globalAlpha = opacity / 100;
-        ctx.translate(
-            (width * (scale / 100)) / 2,
-            (height * (scale / 100)) / 2
-        );
-        ctx.rotate(angle * (Math.PI / 180));
-        ctx.translate(
-            -(width * (scale / 100)) / 2,
-            -(height * (scale / 100)) / 2
-        );
-        ctx.drawImage(
-            overlayImg,
-            position.x,
-            position.y,
-            width * (scale / 100),
-            height * (scale / 100)
-        );
-        ctx.setTransform(1, 0, 0, 1, 0, 0);
-        ctx.restore();
+        // draw overlay image
+        let { width, height } = overlayImgBoundaries;
+        const { x, y } = position;
+        scale = scale / 100;
+        opacity = opacity / 100;
+        width = width * scale;
+        height = height * scale;
+
+        drawImage(ctx, overlayImg, x, y, {
+            width,
+            height,
+            opacity,
+            angle,
+        });
     }, [mainImg, overlayImg, scale, opacity, angle, position]);
 
     const { width, height } = mainImgBoundaries;

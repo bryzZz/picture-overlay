@@ -3,7 +3,8 @@
     --container-width: calc(1100px + var(--container-pad) * 2);
 
     --color-primary: #fcc419;
-    --color-primary-alt: #f08c00;
+    --color-primary-dark: #f08c00;
+    --color-primary-bright: #ffda6a;
     --color-secondary: #ffffff;
     --color-tertiary: #c2c2c2;
     --color-bg: #212529;

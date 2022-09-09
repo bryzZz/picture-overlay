@@ -1,17 +1,27 @@
 import React, { useRef, useState } from "react";
 import { Header, Preview, Setting, Upload } from "./components";
+import { createImage } from "./utils";
 import { Boundaries, Coords } from "./types";
+
+const positions: Setting.Option[] = [
+    { label: "Left", value: "left" },
+    { label: "Right", value: "right" },
+    { label: "Top", value: "top" },
+    { label: "Bottom", value: "bottom" },
+    { label: "Horizontal Center", value: "hCenter" },
+    { label: "Vertical Center", value: "vCenter" },
+];
 
 export const App: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const [mainImgData, setMainImgData] = useState<string>("");
-    const [mainImg, setMainImg] = useState<HTMLImageElement>(new Image());
+    // const [mainImgData, setMainImgData] = useState<string>("");
+    const [mainImg, setMainImg] = useState<HTMLImageElement | null>(null);
     const [mainImgBoundaries, setMainImgBoundaries] = useState<Boundaries>({
         width: 0,
         height: 0,
     });
-    const [overlayImgData, setOverlayImgData] = useState<string>("");
-    const [overlayImg, setOverlayImg] = useState<HTMLImageElement>(new Image());
+    // const [overlayImgData, setOverlayImgData] = useState<string>("");
+    const [overlayImg, setOverlayImg] = useState<HTMLImageElement | null>(null);
     const [overlayImgBoundaries, setOverlayImgBoundaries] =
         useState<Boundaries>({
             width: 0,
@@ -29,24 +39,16 @@ export const App: React.FC = () => {
         link.click();
     };
 
-    const handleChangeMainImg = (imgData: string) => {
-        const img = new Image();
-        img.onload = () => {
-            setMainImgBoundaries({ width: img.width, height: img.height });
-            setMainImgData(imgData);
-            setMainImg(img);
-        };
-        img.src = imgData;
+    const handleChangeMainImg = async (imgData: string) => {
+        const img = await createImage(imgData);
+        setMainImgBoundaries({ width: img.width, height: img.height });
+        setMainImg(img);
     };
 
-    const handleChangeOverlayImg = (imgData: string) => {
-        const img = new Image();
-        img.onload = () => {
-            setOverlayImgBoundaries({ width: img.width, height: img.height });
-            setOverlayImgData(imgData);
-            setOverlayImg(img);
-        };
-        img.src = imgData;
+    const handleChangeOverlayImg = async (imgData: string) => {
+        const img = await createImage(imgData);
+        setOverlayImgBoundaries({ width: img.width, height: img.height });
+        setOverlayImg(img);
     };
 
     const handleChangeScale = (value: number) => {
@@ -69,6 +71,26 @@ export const App: React.FC = () => {
         setPosition((p) => ({ ...p, y: value }));
     };
 
+    const handleChangePosition = (option: Setting.Option) => {
+        let { x, y } = position;
+
+        if (option.value === "left") {
+            x = 0;
+        } else if (option.value === "right") {
+            x = mainImgBoundaries.width - overlayImgBoundaries.width;
+        } else if (option.value === "top") {
+            y = 0;
+        } else if (option.value === "bottom") {
+            y = mainImgBoundaries.height - overlayImgBoundaries.height;
+        } else if (option.value === "hCenter") {
+            x = (mainImgBoundaries.width - overlayImgBoundaries.width) / 2;
+        } else if (option.value === "vCenter") {
+            y = (mainImgBoundaries.height - overlayImgBoundaries.height) / 2;
+        }
+
+        setPosition({ x, y });
+    };
+
     const maxXOffset = mainImgBoundaries.width,
         minXOffset = -overlayImgBoundaries.width * (scale / 100),
         maxYOffset = mainImgBoundaries.height,
@@ -79,14 +101,14 @@ export const App: React.FC = () => {
             <Header />
             <div className='container App__container'>
                 <div className='App__side'>
-                    {!mainImgData && (
+                    {!mainImg && (
                         <Upload onChangeImgData={handleChangeMainImg} />
                     )}
-                    {mainImgData && (
+                    {mainImg && (
                         <Preview
                             canvasRef={canvasRef}
                             mainImg={mainImg}
-                            overlayImg={overlayImg}
+                            overlayImg={overlayImg || new Image()}
                             mainImgBoundaries={mainImgBoundaries}
                             overlayImgBoundaries={overlayImgBoundaries}
                             scale={scale}
@@ -97,43 +119,44 @@ export const App: React.FC = () => {
                     )}
                 </div>
                 <div className='App__side'>
-                    {!overlayImgData && (
+                    {!overlayImg && (
                         <Upload onChangeImgData={handleChangeOverlayImg} />
                     )}
-                    <Setting
+                    <Setting.Input
                         label='Scale:'
                         value={scale}
                         min={0}
-                        max={200}
+                        max={300}
                         onChange={handleChangeScale}
                     />
-                    <Setting
+                    <Setting.Input
                         label='Opacity:'
                         value={opacity}
                         min={0}
                         max={100}
                         onChange={handleChangeOpacity}
                     />
-                    <Setting
+                    <Setting.Input
                         label='Angle:'
                         value={angle}
                         min={-180}
                         max={180}
                         onChange={handleChangeAngle}
                     />
-                    {/* <Setting
+                    <Setting.Select
                         label='Position:'
-                        value={angle}
-                        onChange={handleChangeAngle}
-                    /> */}
-                    <Setting
+                        defaultValue={positions[0]}
+                        options={positions}
+                        onChange={handleChangePosition}
+                    />
+                    <Setting.Input
                         label='Offset x:'
                         min={minXOffset}
                         max={maxXOffset}
                         value={position.x}
                         onChange={handleChangeOffsetX}
                     />
-                    <Setting
+                    <Setting.Input
                         label='Offset y:'
                         min={minYOffset}
                         max={maxYOffset}
