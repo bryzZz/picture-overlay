@@ -36,8 +36,8 @@ export function drawImage(
         ctx.save();
 
         let { width, height, angle, opacity } = opts;
-        if (!width) width = img.width;
-        if (!height) height = img.height;
+        if (width === undefined) width = img.width;
+        if (height === undefined) height = img.height;
 
         if (opacity) ctx.globalAlpha = opacity;
         if (angle) {
