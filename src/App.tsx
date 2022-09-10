@@ -32,6 +32,11 @@ export const App: React.FC = () => {
     const [angle, setAngle] = useState<number>(0);
     const [position, setPosition] = useState<Coords>({ x: 0, y: 0 });
 
+    const maxXOffset = mainImgBoundaries.width,
+        minXOffset = Math.floor(-overlayImgBoundaries.width * (scale / 100)),
+        maxYOffset = mainImgBoundaries.height,
+        minYOffset = Math.floor(-overlayImgBoundaries.height * (scale / 100));
+
     const handleGetImage = () => {
         const link = document.createElement("a");
         link.download = "download.png";
@@ -83,18 +88,19 @@ export const App: React.FC = () => {
         } else if (option.value === "bottom") {
             y = mainImgBoundaries.height - overlayImgBoundaries.height;
         } else if (option.value === "hCenter") {
-            x = (mainImgBoundaries.width - overlayImgBoundaries.width) / 2;
+            x =
+                (mainImgBoundaries.width -
+                    overlayImgBoundaries.width * (scale / 100)) /
+                2;
         } else if (option.value === "vCenter") {
-            y = (mainImgBoundaries.height - overlayImgBoundaries.height) / 2;
+            y =
+                (mainImgBoundaries.height -
+                    overlayImgBoundaries.height * (scale / 100)) /
+                2;
         }
 
-        setPosition({ x, y });
+        setPosition({ x: Math.floor(x), y: Math.floor(y) });
     };
-
-    const maxXOffset = mainImgBoundaries.width,
-        minXOffset = -overlayImgBoundaries.width * (scale / 100),
-        maxYOffset = mainImgBoundaries.height,
-        minYOffset = -overlayImgBoundaries.height * (scale / 100);
 
     return (
         <div className='App'>
