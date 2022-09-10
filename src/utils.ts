@@ -33,23 +33,20 @@ export function drawImage(
     opts?: DrawImageOpts
 ) {
     if (opts) {
-        ctx.save();
-
         let { width, height, angle, opacity } = opts;
         if (width === undefined) width = img.width;
         if (height === undefined) height = img.height;
 
         if (opacity) ctx.globalAlpha = opacity;
         if (angle) {
-            ctx.translate(width / 2, height / 2);
+            ctx.save();
+            ctx.setTransform(1, 0, 0, 1, x + width / 2, y + height / 2);
             ctx.rotate(angle * (Math.PI / 180));
-            ctx.translate(-width / 2, -height / 2);
+            ctx.drawImage(img, -width / 2, -height / 2, width, height);
+            ctx.restore();
+        } else {
+            ctx.drawImage(img, x, y, width, height);
         }
-
-        ctx.drawImage(img, x, y, width, height);
-
-        ctx.setTransform(1, 0, 0, 1, 0, 0);
-        ctx.restore();
     } else {
         ctx.drawImage(img, x, y);
     }
