@@ -124,7 +124,7 @@ export const App: React.FC = () => {
                         />
                     )}
                 </div>
-                <div className='App__side'>
+                <div className='App__side App__settings'>
                     {!overlayImg && (
                         <Upload onChangeImgData={handleChangeOverlayImg} />
                     )}
@@ -169,7 +169,9 @@ export const App: React.FC = () => {
                         value={position.y}
                         onChange={handleChangeOffsetY}
                     />
-                    <button onClick={handleGetImage}>Get Image</button>
+                    <button className='App__submit' onClick={handleGetImage}>
+                        Get Image
+                    </button>
                 </div>
             </div>
         </div>
