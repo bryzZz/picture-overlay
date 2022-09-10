@@ -58,6 +58,24 @@ export const App: React.FC = () => {
 
     const handleChangeScale = (value: number) => {
         setScale(value);
+        // Also change position when change scale because we need
+        // an illusion like overlay picture change scale from center
+        setPosition(({ x, y }) => {
+            const pW = overlayImgBoundaries.width * (scale / 100),
+                pH = overlayImgBoundaries.height * (scale / 100),
+                nW = overlayImgBoundaries.width * (value / 100),
+                nH = overlayImgBoundaries.height * (value / 100);
+
+            let newX = x + (pW - nW) / 2,
+                newY = y + (pH - nH) / 2;
+
+            if (nW > pW) {
+                newX = x - (nW - pW) / 2;
+                newY = y - (nH - pH) / 2;
+            }
+
+            return { x: Math.round(newX), y: Math.round(newY) };
+        });
     };
 
     const handleChangeOpacity = (value: number) => {
