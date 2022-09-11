@@ -3,7 +3,7 @@ import { readImage } from "../../utils";
 import "./style.css";
 
 interface UploadProps {
-    onChangeImgData: (imgData: string) => void;
+    onChangeImgData: (imgData: string, name?: string) => void;
 }
 
 export const Upload: React.FC<UploadProps> = ({ onChangeImgData }) => {
@@ -21,7 +21,8 @@ export const Upload: React.FC<UploadProps> = ({ onChangeImgData }) => {
 
     const handleChangeFile = async (file: File) => {
         const result = await readImage(file);
-        if (!(result instanceof ArrayBuffer) && result) onChangeImgData(result);
+        if (!(result instanceof ArrayBuffer) && result)
+            onChangeImgData(result, file.name);
     };
 
     const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {

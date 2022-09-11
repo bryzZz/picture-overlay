@@ -20,6 +20,11 @@
     border: 1px solid var(--color-primary);
 }
 
+.Setting--Text .Setting__input {
+    padding: 0.3rem;
+}
+
+.Setting--Text .Setting__input,
 .Setting-select-container {
     grid-column: 2 span;
 }

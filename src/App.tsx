@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Header, Preview, Setting, Upload } from "./components";
-import { createImage } from "./utils";
+import { createImage, getFilename } from "./utils";
 import { Boundaries, Coords } from "./types";
 
 const positions: Setting.Option[] = [
@@ -31,6 +31,7 @@ export const App: React.FC = () => {
     const [opacity, setOpacity] = useState<number>(100);
     const [angle, setAngle] = useState<number>(0);
     const [position, setPosition] = useState<Coords>({ x: 0, y: 0 });
+    const [filename, setFilename] = useState<string>("");
 
     const maxXOffset = mainImgBoundaries.width,
         minXOffset = Math.floor(-overlayImgBoundaries.width * (scale / 100)),
@@ -39,15 +40,16 @@ export const App: React.FC = () => {
 
     const handleGetImage = () => {
         const link = document.createElement("a");
-        link.download = "download.png";
+        link.download = `${filename || "download"}.png`;
         link.href = canvasRef.current!.toDataURL();
         link.click();
     };
 
-    const handleChangeMainImg = async (imgData: string) => {
+    const handleChangeMainImg = async (imgData: string, name?: string) => {
         const img = await createImage(imgData);
         setMainImgBoundaries({ width: img.width, height: img.height });
         setMainImg(img);
+        setFilename(name ? getFilename(name) : "download");
     };
 
     const handleChangeOverlayImg = async (imgData: string) => {
@@ -120,6 +122,10 @@ export const App: React.FC = () => {
         setPosition({ x: Math.floor(x), y: Math.floor(y) });
     };
 
+    const handleChangeFilename = (filename: string) => {
+        setFilename(filename);
+    };
+
     return (
         <div className='App'>
             <Header />
@@ -186,6 +192,11 @@ export const App: React.FC = () => {
                         max={maxYOffset}
                         value={position.y}
                         onChange={handleChangeOffsetY}
+                    />
+                    <Setting.Text
+                        label='Filename: '
+                        value={filename}
+                        onChange={handleChangeFilename}
                     />
                     <button className='App__submit' onClick={handleGetImage}>
                         Get Image

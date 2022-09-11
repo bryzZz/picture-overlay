@@ -51,3 +51,7 @@ export function drawImage(
         ctx.drawImage(img, x, y);
     }
 }
+
+export function getFilename(file: string) {
+    return file.slice(0, file.lastIndexOf("."));
+}

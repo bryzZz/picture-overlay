@@ -19,6 +19,12 @@ export namespace Setting {
         onChange: (value: Option) => void;
     }
 
+    interface TextProps {
+        label: string;
+        value: string;
+        onChange: (value: string) => void;
+    }
+
     export const Input: React.FC<InputProps> = memo(
         ({ label, value, min, max, onChange }) => {
             const [isRangeHover, setIsRangeHover] = useState<boolean>(false);
@@ -91,6 +97,25 @@ export namespace Setting {
                     options={options}
                     className='Setting-select-container'
                     classNamePrefix='Setting-select'
+                />
+            </div>
+        );
+    };
+
+    export const Text: React.FC<TextProps> = ({ label, value, onChange }) => {
+        const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+            onChange(e.target.value);
+        };
+
+        return (
+            <div className='Setting Setting--Text'>
+                <span className='Setting__label'>{label}</span>
+                <input
+                    className='Setting__input'
+                    type='text'
+                    placeholder='download'
+                    value={value}
+                    onChange={handleChange}
                 />
             </div>
         );
