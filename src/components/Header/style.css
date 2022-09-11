@@ -1,7 +1,9 @@
 .Header {
-    padding: 0.1rem 1rem;
+    display: flex;
+    align-items: center;
+    height: 7vh;
+    padding: 0 1rem;
     margin-bottom: 1rem;
-    /* border-bottom: 1px solid #c2c2c2; */
 }
 
 .Header__title {
