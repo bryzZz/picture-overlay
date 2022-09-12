@@ -1,5 +1,6 @@
 import React, { memo, useState } from "react";
 import ReactSelect from "react-select";
+import { SelectOption } from "../../types";
 import "./style.css";
 
 export namespace Setting {
@@ -11,12 +12,11 @@ export namespace Setting {
         onChange: (value: number) => void;
     }
 
-    export type Option = { label: string; value: string };
     interface SelectProps {
         label: string;
-        defaultValue: Option;
-        options: Option[];
-        onChange: (value: Option) => void;
+        defaultValue: SelectOption;
+        options: Readonly<SelectOption[]>;
+        onChange: (value: SelectOption) => void;
     }
 
     interface TextProps {
@@ -84,7 +84,7 @@ export namespace Setting {
         options,
         onChange,
     }) => {
-        const handleChange = (option: Option | null) => {
+        const handleChange = (option: SelectOption | null) => {
             if (option) onChange(option);
         };
 

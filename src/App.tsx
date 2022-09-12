@@ -1,16 +1,8 @@
 import React, { useRef, useState } from "react";
 import { Header, Preview, Setting, Upload } from "./components";
 import { createImage, getFilename } from "./utils";
-import { Boundaries, Coords } from "./types";
-
-const positions: Setting.Option[] = [
-    { label: "Left", value: "left" },
-    { label: "Right", value: "right" },
-    { label: "Top", value: "top" },
-    { label: "Bottom", value: "bottom" },
-    { label: "Horizontal Center", value: "hCenter" },
-    { label: "Vertical Center", value: "vCenter" },
-];
+import { positions } from "./constants";
+import { Boundaries, Coords, SelectOption } from "./types";
 
 export const App: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -96,7 +88,7 @@ export const App: React.FC = () => {
         setPosition((p) => ({ ...p, y: value }));
     };
 
-    const handleChangePosition = (option: Setting.Option) => {
+    const handleChangePosition = (option: SelectOption) => {
         let { x, y } = position;
 
         if (option.value === "left") {
