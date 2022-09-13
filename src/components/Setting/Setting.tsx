@@ -78,46 +78,45 @@ export namespace Setting {
         }
     );
 
-    export const Select: React.FC<SelectProps> = ({
-        label,
-        defaultValue,
-        options,
-        onChange,
-    }) => {
-        const handleChange = (option: SelectOption | null) => {
-            if (option) onChange(option);
-        };
+    export const Select: React.FC<SelectProps> = memo(
+        ({ label, defaultValue, options, onChange }) => {
+            const handleChange = (option: SelectOption | null) => {
+                if (option) onChange(option);
+            };
 
-        return (
-            <div className='Setting'>
-                <span className='Setting__label'>{label}</span>
-                <ReactSelect
-                    defaultValue={defaultValue}
-                    onChange={handleChange}
-                    options={options}
-                    className='Setting-select-container'
-                    classNamePrefix='Setting-select'
-                />
-            </div>
-        );
-    };
+            return (
+                <div className='Setting'>
+                    <span className='Setting__label'>{label}</span>
+                    <ReactSelect
+                        defaultValue={defaultValue}
+                        onChange={handleChange}
+                        options={options}
+                        className='Setting-select-container'
+                        classNamePrefix='Setting-select'
+                    />
+                </div>
+            );
+        }
+    );
 
-    export const Text: React.FC<TextProps> = ({ label, value, onChange }) => {
-        const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-            onChange(e.target.value);
-        };
+    export const Text: React.FC<TextProps> = memo(
+        ({ label, value, onChange }) => {
+            const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+                onChange(e.target.value);
+            };
 
-        return (
-            <div className='Setting Setting--Text'>
-                <span className='Setting__label'>{label}</span>
-                <input
-                    className='Setting__input'
-                    type='text'
-                    placeholder='download'
-                    value={value}
-                    onChange={handleChange}
-                />
-            </div>
-        );
-    };
+            return (
+                <div className='Setting Setting--Text'>
+                    <span className='Setting__label'>{label}</span>
+                    <input
+                        className='Setting__input'
+                        type='text'
+                        placeholder='download'
+                        value={value}
+                        onChange={handleChange}
+                    />
+                </div>
+            );
+        }
+    );
 }
