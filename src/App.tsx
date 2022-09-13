@@ -1,50 +1,40 @@
 import React, { useRef } from "react";
 import { Header, Preview, Settings, Upload } from "./components";
-import { AppContextProvider } from "./context";
-import { useSettings } from "./hooks";
+import { store } from "./store";
+import { observer } from "mobx-react-lite";
 
-export const App: React.FC = () => {
+export const App: React.FC = observer(() => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const settings = useSettings();
 
     const handleGetImage = () => {
         const link = document.createElement("a");
-        link.download = `${settings.filename || "download"}.png`;
+        link.download = `${store.filename || "download"}.png`;
         link.href = canvasRef.current!.toDataURL();
         link.click();
     };
 
     return (
-        <AppContextProvider value={settings}>
-            <div className='App'>
-                <Header />
-                <div className='container App__container'>
-                    <div className='App__side'>
-                        {!settings.mainImg && (
-                            <Upload
-                                onChangeImgData={settings.handleChangeMainImg}
-                            />
-                        )}
-                        {settings.mainImg && <Preview canvasRef={canvasRef} />}
-                    </div>
-                    <div className='App__side App__settings'>
-                        {!settings.overlayImg && (
-                            <Upload
-                                onChangeImgData={
-                                    settings.handleChangeOverlayImg
-                                }
-                            />
-                        )}
-                        <Settings />
-                        <button
-                            className='App__submit'
-                            onClick={handleGetImage}
-                        >
-                            Get Image
-                        </button>
-                    </div>
+        <div className='App'>
+            <Header />
+            <div className='container App__container'>
+                <div className='App__side'>
+                    {!store.mainImg && (
+                        <Upload onChangeImgData={store.handleChangeMainImg} />
+                    )}
+                    {store.mainImg && <Preview canvasRef={canvasRef} />}
+                </div>
+                <div className='App__side App__settings'>
+                    {!store.overlayImg && (
+                        <Upload
+                            onChangeImgData={store.handleChangeOverlayImg}
+                        />
+                    )}
+                    <Settings />
+                    <button className='App__submit' onClick={handleGetImage}>
+                        Get Image
+                    </button>
                 </div>
             </div>
-        </AppContextProvider>
+        </div>
     );
-};
+});

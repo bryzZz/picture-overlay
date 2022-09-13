@@ -4,6 +4,8 @@ specifiers:
   '@types/react': ^18.0.17
   '@types/react-dom': ^18.0.6
   '@vitejs/plugin-react': ^2.0.1
+  mobx: ^6.6.2
+  mobx-react-lite: ^3.4.0
   react: ^18.2.0
   react-dom: ^18.2.0
   react-select: ^5.4.0
@@ -11,6 +13,8 @@ specifiers:
   vite: ^3.0.7
 
 dependencies:
+  mobx: 6.6.2
+  mobx-react-lite: 3.4.0_qrr2ojv4n7h7ey2xj7njerqqr4
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-select: 5.4.0_zxljzmqdrxwnuenbkrz77w74uy
@@ -908,6 +912,28 @@ packages:
 
   /memoize-one/5.2.1:
     resolution: {integrity: sha512-zYiwtZUcYyXKo/np96AGZAckk+FWWsUdJ3cHGGmld7+AhvcWmQyGCYUh1hc4Q/pkOhb65dQR/pqCyK0cOaHz4Q==}
+    dev: false
+
+  /mobx-react-lite/3.4.0_qrr2ojv4n7h7ey2xj7njerqqr4:
+    resolution: {integrity: sha512-bRuZp3C0itgLKHu/VNxi66DN/XVkQG7xtoBVWxpvC5FhAqbOCP21+nPhULjnzEqd7xBMybp6KwytdUpZKEgpIQ==}
+    peerDependencies:
+      mobx: ^6.1.0
+      react: ^16.8.0 || ^17 || ^18
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      mobx: 6.6.2
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
+
+  /mobx/6.6.2:
+    resolution: {integrity: sha512-IOpS0bf3+hXIhDIy+CmlNMBfFpAbHS0aVHcNC+xH/TFYEKIIVDKNYRh9eKlXuVfJ1iRKAp0cRVmO145CyJAMVQ==}
     dev: false
 
   /ms/2.1.2:

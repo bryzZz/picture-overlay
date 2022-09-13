@@ -1,83 +1,60 @@
-import React, { memo, useEffect } from "react";
-import { useAppContext } from "../../context";
-import { usePositionExtremes } from "../../hooks";
+import React from "react";
+import { store } from "../../store";
 import { positions } from "../../constants";
 import { Setting } from "../Setting/Setting";
+import { observer } from "mobx-react-lite";
 
 interface SettingsProps {}
 
-export const Settings: React.FC<SettingsProps> = () => {
-    const {
-        mainImgSize,
-        overlayImgSize,
-        scale,
-        opacity,
-        angle,
-        position,
-        filename,
-        handleChangeScale,
-        handleChangeOpacity,
-        handleChangeAngle,
-        handleChangePosition,
-        handleChangeOffsetX,
-        handleChangeOffsetY,
-        handleChangeFilename,
-    } = useAppContext();
-
-    const { maxX, maxY, minX, minY } = usePositionExtremes(
-        mainImgSize,
-        overlayImgSize,
-        scale
-    );
-
+export const Settings: React.FC<SettingsProps> = observer(() => {
     return (
         <>
             <Setting.Input
                 label='Scale:'
-                value={scale}
+                value={store.scale}
                 min={0}
                 max={300}
-                onChange={handleChangeScale}
+                onChange={store.handleChangeScale}
             />
             <Setting.Input
                 label='Opacity:'
-                value={opacity}
+                value={store.opacity}
                 min={0}
                 max={100}
-                onChange={handleChangeOpacity}
+                onChange={store.handleChangeOpacity}
             />
             <Setting.Input
                 label='Angle:'
-                value={angle}
+                value={store.angle}
                 min={-180}
                 max={180}
-                onChange={handleChangeAngle}
+                onChange={store.handleChangeAngle}
             />
             <Setting.Select
                 label='Position:'
                 defaultValue={positions[0]}
                 options={positions}
-                onChange={handleChangePosition}
+                onChange={store.handleChangePosition}
             />
             <Setting.Input
                 label='Offset x:'
-                min={minX}
-                max={maxX}
-                value={position.x}
-                onChange={handleChangeOffsetX}
+                min={store.minX}
+                max={store.maxX}
+                value={store.position.x}
+                onChange={store.handleChangeOffsetX}
             />
             <Setting.Input
                 label='Offset y:'
-                min={minY}
-                max={maxY}
-                value={position.y}
-                onChange={handleChangeOffsetY}
+                min={store.minY}
+                max={store.maxY}
+                value={store.position.y}
+                onChange={store.handleChangeOffsetY}
             />
             <Setting.Text
                 label='Filename: '
-                value={filename}
-                onChange={handleChangeFilename}
+                value={store.filename}
+                onChange={store.handleChangeFilename}
             />
         </>
     );
-};
+});
