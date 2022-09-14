@@ -21,8 +21,7 @@ export const Upload: React.FC<UploadProps> = ({ onChangeImgData }) => {
 
     const handleChangeFile = async (file: File) => {
         const result = await readImage(file);
-        if (!(result instanceof ArrayBuffer) && result)
-            onChangeImgData(result, file.name);
+        if (!(result instanceof ArrayBuffer) && result) onChangeImgData(result, file.name);
     };
 
     const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,15 +37,15 @@ export const Upload: React.FC<UploadProps> = ({ onChangeImgData }) => {
 
     return (
         <div className={"Upload" + (isDragOver ? " dragover" : "")}>
-            <span className='Upload__label'>Drag&drop here</span>
+            <span className="Upload__label">Drag&drop here</span>
             <input
-                className='Upload__input'
+                className="Upload__input"
                 onChange={handleChange}
                 onDragEnter={handleDragEnter}
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
-                type='file'
-                accept='image/*'
+                type="file"
+                accept="image/*"
             />
         </div>
     );

@@ -46,7 +46,7 @@ export const Preview: React.FC<PreviewProps> = observer(({ canvasRef }) => {
 
     const { width, height } = store.mainImgSize;
     return (
-        <div className='Preview'>
+        <div className="Preview">
             <Canvas canvasRef={canvasRef} width={width} height={height} />
         </div>
     );

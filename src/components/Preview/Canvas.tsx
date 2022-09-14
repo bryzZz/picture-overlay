@@ -6,8 +6,6 @@ interface CanvasProps {
     height: number;
 }
 
-export const Canvas: React.FC<CanvasProps> = memo(
-    ({ canvasRef, width, height }) => {
-        return <canvas ref={canvasRef} width={width} height={height} />;
-    }
-);
+export const Canvas: React.FC<CanvasProps> = memo(({ canvasRef, width, height }) => {
+    return <canvas ref={canvasRef} width={width} height={height} />;
+});

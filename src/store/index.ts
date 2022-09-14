@@ -70,15 +70,9 @@ class Store {
         } else if (option.value === "bottom") {
             y = this.mainImgSize.height - this.overlayImgSize.height;
         } else if (option.value === "hCenter") {
-            x =
-                (this.mainImgSize.width -
-                    this.overlayImgSize.width * (this.scale / 100)) /
-                2;
+            x = (this.mainImgSize.width - this.overlayImgSize.width * (this.scale / 100)) / 2;
         } else if (option.value === "vCenter") {
-            y =
-                (this.mainImgSize.height -
-                    this.overlayImgSize.height * (this.scale / 100)) /
-                2;
+            y = (this.mainImgSize.height - this.overlayImgSize.height * (this.scale / 100)) / 2;
         }
 
         this.position.x = Math.floor(x);
