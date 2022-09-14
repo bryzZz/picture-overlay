@@ -13,17 +13,22 @@ export const App: React.FC = observer(() => {
         link.click();
     };
 
+    const showMainUpload = !store.mainImg,
+        showOverlayUpload = !store.overlayImg,
+        showPreview = !!store.mainImg,
+        showSettings = store.mainImg && store.overlayImg;
+
     return (
         <div className="App">
             <Header />
             <div className="container App__container">
                 <div className="App__side">
-                    {!store.mainImg && <Upload onChangeImgData={store.handleChangeMainImg} />}
-                    {store.mainImg && <Preview canvasRef={canvasRef} />}
+                    {showMainUpload && <Upload onChangeImgData={store.handleChangeMainImg} />}
+                    {showPreview && <Preview canvasRef={canvasRef} />}
                 </div>
                 <div className="App__side App__settings">
-                    {!store.overlayImg && <Upload onChangeImgData={store.handleChangeOverlayImg} />}
-                    <Settings />
+                    {showOverlayUpload && <Upload onChangeImgData={store.handleChangeOverlayImg} />}
+                    {showSettings && <Settings />}
                     <button className="App__submit" onClick={handleGetImage}>
                         Get Image
                     </button>
