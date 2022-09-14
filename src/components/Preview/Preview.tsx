@@ -34,7 +34,9 @@ export const Preview: React.FC<PreviewProps> = observer(({ canvasRef }) => {
             opacity: opacity_,
             angle: store.angle,
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
+        canvasRef,
         store.mainImg,
         store.overlayImg,
         store.scale,
