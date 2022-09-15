@@ -4,9 +4,10 @@ import "./style.css";
 
 interface UploadProps {
     onChangeImgData: (imgData: string, name?: string) => void;
+    children: string;
 }
 
-export const Upload: React.FC<UploadProps> = ({ onChangeImgData }) => {
+export const Upload: React.FC<UploadProps> = ({ onChangeImgData, children }) => {
     const [isDragOver, setIsDragOver] = useState<boolean>(false);
 
     const handleDragEnter = (e: React.DragEvent) => {
@@ -37,7 +38,7 @@ export const Upload: React.FC<UploadProps> = ({ onChangeImgData }) => {
 
     return (
         <div className={"Upload" + (isDragOver ? " dragover" : "")}>
-            <span className="Upload__label">Drag&drop here</span>
+            <span className="Upload__label">{children}</span>
             <input
                 className="Upload__input"
                 onChange={handleChange}

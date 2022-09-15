@@ -23,15 +23,27 @@ export const App: React.FC = observer(() => {
             <Header />
             <div className="container App__container">
                 <div className="App__side">
-                    {showMainUpload && <Upload onChangeImgData={store.handleChangeMainImg} />}
+                    {showMainUpload && (
+                        <Upload onChangeImgData={store.handleChangeMainImg}>
+                            Drag&Drop or click here to upload main image
+                        </Upload>
+                    )}
                     {showPreview && <Preview canvasRef={canvasRef} />}
                 </div>
                 <div className="App__side App__settings">
-                    {showOverlayUpload && <Upload onChangeImgData={store.handleChangeOverlayImg} />}
-                    {showSettings && <Settings />}
-                    <button className="App__submit" onClick={handleGetImage}>
-                        Get Image
-                    </button>
+                    {showOverlayUpload && (
+                        <Upload onChangeImgData={store.handleChangeOverlayImg}>
+                            Drag&Drop or click here to upload watermark
+                        </Upload>
+                    )}
+                    {showSettings && (
+                        <>
+                            <Settings />
+                            <button className="App__submit" onClick={handleGetImage}>
+                                Get Image
+                            </button>
+                        </>
+                    )}
                 </div>
             </div>
         </div>
