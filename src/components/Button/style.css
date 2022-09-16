@@ -1,0 +1,21 @@
+.Button {
+    border: none;
+    outline: none;
+    align-self: flex-end;
+    padding: 0.5rem 2rem;
+    background-color: var(--color-primary);
+    font-weight: 500;
+    color: var(--color-bg);
+    transition: ease-in-out 0.2s;
+    cursor: pointer;
+}
+
+.Button.small {
+    padding: 0.5rem 0.6rem;
+    font-size: 0.85rem;
+}
+
+.Button:hover {
+    box-shadow: -2px 2px 0px var(--color-primary-dark);
+    transform: translate(2px, -2px);
+}

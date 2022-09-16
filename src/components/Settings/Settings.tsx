@@ -1,14 +1,71 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { store } from "../../store";
+import { observer } from "mobx-react-lite";
 import { positions } from "../../constants";
 import { Setting } from "../Setting/Setting";
-import { observer } from "mobx-react-lite";
+import { Button } from "../Button/Button";
+import "./style.css";
+import { readImage } from "../../utils";
 
 interface SettingsProps {}
 
 export const Settings: React.FC<SettingsProps> = observer(() => {
+    const mainRef = useRef<HTMLInputElement>(null);
+    const overlayRef = useRef<HTMLInputElement>(null);
+
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        if ((e.target as HTMLButtonElement).name === "main") {
+            mainRef.current?.click();
+        } else {
+            overlayRef.current?.click();
+        }
+    };
+
+    useEffect(() => {
+        const main = mainRef.current,
+            overlay = overlayRef.current;
+        const handleChangeFile = async (file: File, fn: Function) => {
+            const result = await readImage(file);
+            if (!(result instanceof ArrayBuffer) && result) fn(result, file.name);
+        };
+
+        const handleChangeMain = async (e: Event) => {
+            if ((e.target! as HTMLInputElement).files === null) return;
+            await handleChangeFile(
+                (e.target! as HTMLInputElement).files![0],
+                store.handleChangeMainImg
+            );
+        };
+
+        const handleChangeOverlay = async (e: Event) => {
+            if ((e.target! as HTMLInputElement).files === null) return;
+            await handleChangeFile(
+                (e.target! as HTMLInputElement).files![0],
+                store.handleChangeOverlayImg
+            );
+        };
+
+        main!.addEventListener("change", handleChangeMain);
+        overlay!.addEventListener("change", handleChangeOverlay);
+
+        return () => {
+            main!.removeEventListener("change", handleChangeMain);
+            overlay!.removeEventListener("change", handleChangeOverlay);
+        };
+    }, []);
+
     return (
         <>
+            <div className="Settings__buttons">
+                <Button size="small" name="main" onClick={handleClick}>
+                    Main image uploaded
+                </Button>
+                <Button size="small" name="overlay" onClick={handleClick}>
+                    Watermark uploaded
+                </Button>
+                <input ref={mainRef} type="file" hidden />
+                <input ref={overlayRef} type="file" hidden />
+            </div>
             <Setting.Input
                 label="Scale:"
                 value={store.scale}

@@ -37,20 +37,3 @@ body {
     flex-direction: column;
     gap: 1.5rem;
 }
-
-.App__submit {
-    border: none;
-    outline: none;
-    align-self: flex-end;
-    padding: 0.5rem 2rem;
-    background-color: var(--color-primary);
-    font-weight: 500;
-    color: var(--color-bg);
-    transition: ease-in-out 0.2s;
-    cursor: pointer;
-}
-
-.App__submit:hover {
-    box-shadow: -2px 2px 0px var(--color-primary-dark);
-    transform: translate(2px, -2px);
-}

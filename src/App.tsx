@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { Header, Preview, Settings, Upload } from "./components";
 import { store } from "./store";
 import { observer } from "mobx-react-lite";
+import { Button } from "./components/Button/Button";
 
 export const App: React.FC = observer(() => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -39,9 +40,9 @@ export const App: React.FC = observer(() => {
                     {showSettings && (
                         <>
                             <Settings />
-                            <button className="App__submit" onClick={handleGetImage}>
+                            <Button className="App__submit" onClick={handleGetImage}>
                                 Get Image
-                            </button>
+                            </Button>
                         </>
                     )}
                 </div>
